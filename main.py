@@ -5,14 +5,19 @@ from sqlalchemy.orm import Session
 import models, schemas, auth
 from database import engine, get_db
 
-# إنشاء جداول قاعدة البيانات تلقائياً عند التشغيل
-models.Base.metadata.create_all(bind=engine)
-
 app = FastAPI(
     title="UmbrAI Backend API",
     description="API for UmbrAI Platform",
     version="1.0.0"
 )
+
+# إنشاء جداول قاعدة البيانات عند إقلاع السيرفر فقط
+@app.on_event("startup")
+def startup_db_client():
+    try:
+        models.Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print("Database startup issue:", e)
 
 # السماح للفرونت إند بالاتصال بالسيرفر (CORS)
 app.add_middleware(
