@@ -5,9 +5,8 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./umbra_ai.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:////tmp/umbra_ai.db")
 
-# إعداد خاص بقواعد بيانات SQLite
 connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
 
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
