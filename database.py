@@ -5,6 +5,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
+# مسار مطلق مسموح بالكتابة فيه داخل Vercel
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:////tmp/umbra_ai.db")
 
 connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
@@ -14,7 +15,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# دالة فتح وإغلاق الاتصال بقاعدة البيانات تلقائياً مع كل طلب
 def get_db():
     db = SessionLocal()
     try:
